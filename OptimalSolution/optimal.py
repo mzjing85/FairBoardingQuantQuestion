@@ -21,15 +21,18 @@ for i in range(1, maxPoolSize + 1):
         for passenger in range(i):
             if passenger < numSeats:
                 seats[passenger] = passenger  # assign passenger to seat
-                cumulativeProb[passenger] = ((cumulativeProb[passenger] * (j - 1) + 1)) / j
+                cumulativeProb[passenger] = (((cumulativeProb[passenger] * (j - 1))+ 1)) / j
                 end = time.time()  # timer end for iteration
                 elapsedTime += end - start
             else:
-                #select random number between 1 - i
-                random_seat = random.randint(0, i-1)
+                #select random number between 1 - (passenger - 1)
+                random_seat = random.randint(0, passenger - 1)
                 if random_seat < numSeats:
                     cumulativeProb[seats[random_seat]] = ((cumulativeProb[passenger] * (j - 1) - 1)) / j
+                    seats[random_seat] = passenger  # replace the seat with the new passenge
                     cumulativeProb[passenger] = ((cumulativeProb[passenger] * (j - 1) + 1)) / j
+                else:
+                    cumulativeProb[passenger] = (cumulativeProb[passenger] * (j - 1)) / j
                 end = time.time()  # timer end for iteration
                 elapsedTime += end - start
         
@@ -47,22 +50,6 @@ for point in points:
 for i in range(len(totalElapsedTime)):
     print(f"Average Elapsed Time for {i+1} Passengers: {totalElapsedTime[i]:.8f} seconds")
 
-
-
-
-
-
-
-
-
-
-
-
-            
-    for x in range(i):
-        points.append([i, cumulativeProb[x]])
-
-    totalElapsedTime[i - 1] = elapsedTime / numIterations  # avg elapsed time per iteration for i passengers
 
 # Create output folder
 output_folder = "generatedTestData"
