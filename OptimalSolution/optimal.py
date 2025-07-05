@@ -22,8 +22,6 @@ for i in range(1, maxPoolSize + 1):
             if passenger < numSeats:
                 seats[passenger] = passenger  # assign passenger to seat
                 cumulativeProb[passenger] = (((cumulativeProb[passenger] * (j - 1))+ 1)) / j
-                end = time.time()  # timer end for iteration
-                elapsedTime += end - start
             else:
                 #select random number between 1 - (passenger - 1)
                 random_seat = random.randint(0, passenger - 1)
@@ -33,8 +31,9 @@ for i in range(1, maxPoolSize + 1):
                     cumulativeProb[passenger] = ((cumulativeProb[passenger] * (j - 1) + 1)) / j
                 else:
                     cumulativeProb[passenger] = (cumulativeProb[passenger] * (j - 1)) / j
-                end = time.time()  # timer end for iteration
-                elapsedTime += end - start
+        
+        end = time.time()  # timer end for iteration
+        elapsedTime += end - start
         
     for x in range(i):
         points.append([i, cumulativeProb[x]])

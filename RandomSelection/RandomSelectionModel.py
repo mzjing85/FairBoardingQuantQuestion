@@ -15,10 +15,9 @@ for i in range(1, maxPoolSize + 1):
     elapsedTime = 0  # elapsed time accumulator
 
     for j in range(1, numIterations + 1):
+        start = time.time()  # timer start for iteration
         sample_size = min(numSeats, i)
         selected_indices = random.sample(range(i), sample_size)
-
-        start = time.time()  # timer start for iteration
 
         for passenger in range(i):
             if passenger in selected_indices:
@@ -34,6 +33,16 @@ for i in range(1, maxPoolSize + 1):
 
     totalElapsedTime[i - 1] = elapsedTime / numIterations  # avg elapsed time per iteration for i passengers
 
+
+#printing 
+print("Starting Simulation: \n")
+for point in points:
+    print(f"Num Passengers: {point[0]}, Cumulative Probability: {point[1]:.4f}")
+
+for i in range(len(totalElapsedTime)):
+    print(f"Average Elapsed Time for {i+1} Passengers: {totalElapsedTime[i]:.8f} seconds")
+
+    
 # Create output folder
 output_folder = "generatedTestData"
 os.makedirs(output_folder, exist_ok=True)
